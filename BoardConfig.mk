@@ -35,7 +35,7 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 
 BOARD_HAS_NO_MISC_PARTITION := true
 
-TARGET_RECOVERY_FSTAB = device/lge/p760/fstab.u2
+TARGET_RECOVERY_FSTAB = device/lge/p768/fstab.u2
 RECOVERY_FSTAB_VERSION = 2
 
 TARGET_BOOTLOADER_BOARD_NAME := p768
@@ -109,4 +109,4 @@ BOARD_SEPOLICY_UNION := \
     device.te \
     domain.te
 
-BOARD_HARDWARE_CLASS := device/lge/p760/cmhw/
+BOARD_HARDWARE_CLASS := device/lge/p768/cmhw/
