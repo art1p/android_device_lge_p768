@@ -11,7 +11,9 @@ DEVICE_PACKAGE_OVERLAYS += device/lge/p768/overlay
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh
+    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh \
+    $(LOCAL_PATH)/twrp.fstab:recovery/root/etc/twrp.fstab \
+    $(LOCAL_PATH)/recovery/init.rc:recovery/root/init.rc
 
 ## Scripts and confs
 PRODUCT_COPY_FILES += \
@@ -132,8 +134,8 @@ PRODUCT_PACKAGES += \
 #    Nfc \
 #    Tag
 
-FRAMEWORKS_BASE_SUBDIRS += \
-	$(addsuffix /java, omapmmlib )
+#FRAMEWORKS_BASE_SUBDIRS += \
+#	$(addsuffix /java, omapmmlib )
 
 #FRAMEWORKS_BASE_SUBDIRS += \
 #	../../$(LOCAL_PATH)/framework-addons/
