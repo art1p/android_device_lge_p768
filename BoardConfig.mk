@@ -110,6 +110,7 @@ BOARD_SEPOLICY_UNION := \
     domain.te
 
 BOARD_HARDWARE_CLASS := device/lge/p768/cmhw/
+BOARD_BLUEDROID_VENDOR_CONF := device/lge/p768/bluetooth/vnd_lge_p768.txt
 
 #twrp
 HAVE_SELINUX := true
