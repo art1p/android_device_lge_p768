@@ -18,6 +18,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.p768.usb.rc:root/init.p768.usb.rc \
     $(LOCAL_PATH)/init.lgep768board.rc:root/init.lgep768board.rc \
     $(LOCAL_PATH)/ueventd.lgep768board.rc:root/ueventd.lgep768board.rc \
+    $(LOCAL_PATH)/scripts/mtp.sh:system/xbin/mtp.sh \
+    $(LOCAL_PATH)/scripts/ums.sh:system/xbin/ums.sh \
     $(LOCAL_PATH)/fstab.u2:root/fstab.lgep768board
 
 PRODUCT_COPY_FILES += \
