@@ -18,6 +18,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.p768.usb.rc:root/init.p768.usb.rc \
     $(LOCAL_PATH)/init.lgep768board.rc:root/init.lgep768board.rc \
     $(LOCAL_PATH)/ueventd.lgep768board.rc:root/ueventd.lgep768board.rc \
+    $(LOCAL_PATH)/scripts/mtp.sh:system/xbin/mtp.sh \
+    $(LOCAL_PATH)/scripts/ums.sh:system/xbin/ums.sh \
     $(LOCAL_PATH)/fstab.u2:root/fstab.u2 \
     $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab
 
@@ -66,7 +68,8 @@ PRODUCT_COPY_FILES += \
 
 ## GPS
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/gps_brcm_conf.xml:system/etc/gps_brcm_conf.xml
+    $(LOCAL_PATH)/configs/gps_brcm_conf.xml:system/etc/gps_brcm_conf.xml \
+    $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf
 
 $(call inherit-product, build/target/product/full.mk)
 
@@ -131,8 +134,8 @@ PRODUCT_PACKAGES += \
 #    Nfc \
 #    Tag
 
-FRAMEWORKS_BASE_SUBDIRS += \
-	$(addsuffix /java, omapmmlib )
+#FRAMEWORKS_BASE_SUBDIRS += \
+#	$(addsuffix /java, omapmmlib )
 
 #FRAMEWORKS_BASE_SUBDIRS += \
 #	../../$(LOCAL_PATH)/framework-addons/

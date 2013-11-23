@@ -107,3 +107,5 @@ BOARD_SEPOLICY_UNION := \
     pvrsrvinit.te \
     device.te \
     domain.te
+
+BOARD_BLUEDROID_VENDOR_CONF := device/lge/p768/bluetooth/vnd_lge_p768.txt
