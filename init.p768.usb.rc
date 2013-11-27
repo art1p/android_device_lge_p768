@@ -13,7 +13,7 @@ on boot
     # change permissions for USB VID
     chown system system /sys/class/android_usb/android0/idVendor
     chmod 0664 /sys/class/android_usb/android0/idVendor
-    
+
     # write access permission for mass_storage
     chown system system /sys/class/android_usb/android0/f_mass_storage/lun0/file
     chmod 0660 /sys/class/android_usb/android0/f_mass_storage/lun0/file
@@ -23,10 +23,7 @@ on boot
     
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 1004
-    write /sys/class/android_usb/android0/idProduct 61A6
-    write /sys/class/android_usb/android0/bDeviceClass 239
-    write /sys/class/android_usb/android0/bDeviceSubClass 2
-    write /sys/class/android_usb/android0/bDeviceProtocol 1
+    write /sys/class/android_usb/android0/idProduct 618e
     write /sys/devices/virtual/android_usb/android0/f_mass_storage/lun0/file /dev/block/vold/179:61
     write /sys/class/android_usb/android0/functions mass_storage,adb
     write /sys/class/android_usb/android0/iManufacturer $ro.product.manufacturer
@@ -42,7 +39,7 @@ on property:sys.usb.config=adb
     write /sys/class/android_usb/android0/bDeviceClass 239
     write /sys/class/android_usb/android0/bDeviceSubClass 2
     write /sys/class/android_usb/android0/bDeviceProtocol 1
-    write /sys/class/android_usb/android0/functions mass_storage,adb
+    write /sys/class/android_usb/android0/functions $sys.usb.config
     write /sys/class/android_usb/android0/enable 1
     start adbd
     setprop sys.usb.state $sys.usb.config
@@ -133,108 +130,3 @@ on property:sys.usb.config=rndis,dm
     write /sys/class/android_usb/android0/functions $sys.usb.config
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state $sys.usb.config
-
-# LGE_CHANGE
-# Move to init.lge.usb.rc
-# Device will be detected as LGE USB device in case of adb only configuration.
-
-# adb only USB configuration
-# This should only be used during device bringup
-# and as a fallback if the USB manager fails to set a standard configuration
-#on property:sys.usb.config=adb
-#    write /sys/class/android_usb/android0/enable 0
-#    write /sys/class/android_usb/android0/idVendor 18d1
-#    write /sys/class/android_usb/android0/idProduct D002
-#    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-#    write /sys/class/android_usb/android0/enable 1
-#    start adbd
-#    setprop sys.usb.state ${sys.usb.config}
-
-# LGE_CHANGE
-# As LGE United Driver need to assign specific DeviceClass
-# dislike google native usb configuration, it must be to
-# restore native setting by assigning DeviceClass explicitly
-# when native configuration such as USB accessory is enabled.
-
-# USB accessory configuration
-on property:sys.usb.config=accessory
-    stop adbd
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d00
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    write /sys/class/android-usb/android0/bDeviceSubClass 0
-    write /sys/class/android-usb/android0/bDeviceProtocol 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB accessory configuration, with adb
-on property:sys.usb.config=accessory,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d01
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    write /sys/class/android-usb/android0/bDeviceSubClass 0
-    write /sys/class/android-usb/android0/bDeviceProtocol 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-# audio accessory configuration
-on property:sys.usb.config=audio_source
-    stop adbd
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d02
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    write /sys/class/android-usb/android0/bDeviceSubClass 0
-    write /sys/class/android-usb/android0/bDeviceProtocol 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
-
-# audio accessory configuration, with adb
-on property:sys.usb.config=audio_source,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d03
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    write /sys/class/android-usb/android0/bDeviceSubClass 0
-    write /sys/class/android-usb/android0/bDeviceProtocol 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB and audio accessory configuration
-on property:sys.usb.config=accessory,audio_source
-    stop adbd
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d04
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    write /sys/class/android-usb/android0/bDeviceSubClass 0
-    write /sys/class/android-usb/android0/bDeviceProtocol 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB and audio accessory configuration, with adb
-on property:sys.usb.config=accessory,audio_source,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d05
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    write /sys/class/android-usb/android0/bDeviceSubClass 0
-    write /sys/class/android-usb/android0/bDeviceProtocol 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-# Used to set USB configuration at boot and to switch the configuration
-# when changing the default configuration
-on property:persist.sys.usb.config=*
-    setprop sys.usb.config ${persist.sys.usb.config}
