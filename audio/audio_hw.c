@@ -170,23 +170,23 @@
 #define DB_TO_ABE_GAIN(x) ((x) + MIXER_ABE_GAIN_0DB)
 #define DB_TO_CAPTURE_PREAMPLIFIER_VOLUME(x) (((x) + 6) / 6)
 #define DB_TO_CAPTURE_VOLUME(x) (((x) - 6) / 6)
-#define DB_TO_HEADSET_VOLUME(x) (((x) + 18) / 2)
+#define DB_TO_HEADSET_VOLUME(x) (((x) + 30) / 2)
 #define DB_TO_SPEAKER_VOLUME(x) (((x) + 52) / 2)
 #define DB_TO_EARPIECE_VOLUME(x) (((x) + 24) / 2)
 
 /* use-case specific mic volumes, all in dB */
 #define CAPTURE_DIGITAL_MIC_VOLUME            26
-#define CAPTURE_MAIN_MIC_VOLUME               15
-#define CAPTURE_SUB_MIC_VOLUME                15
-#define CAPTURE_HEADSET_MIC_VOLUME            15
+#define CAPTURE_MAIN_MIC_VOLUME               28
+#define CAPTURE_SUB_MIC_VOLUME                28
+#define CAPTURE_HEADSET_MIC_VOLUME            20
 
-#define VOICE_RECOGNITION_MAIN_MIC_VOLUME     25
-#define VOICE_RECOGNITION_SUB_MIC_VOLUME      25
-#define VOICE_RECOGNITION_HEADSET_MIC_VOLUME  25
+#define VOICE_RECOGNITION_MAIN_MIC_VOLUME     28
+#define VOICE_RECOGNITION_SUB_MIC_VOLUME      28
+#define VOICE_RECOGNITION_HEADSET_MIC_VOLUME  20
 
-#define CAMCORDER_MAIN_MIC_VOLUME             15
-#define CAMCORDER_SUB_MIC_VOLUME              15
-#define CAMCORDER_HEADSET_MIC_VOLUME          15
+#define CAMCORDER_MAIN_MIC_VOLUME             30
+#define CAMCORDER_SUB_MIC_VOLUME              30
+#define CAMCORDER_HEADSET_MIC_VOLUME          20
 
 #define VOIP_MAIN_MIC_VOLUME                  15
 #define VOIP_SUB_MIC_VOLUME                   15
@@ -198,10 +198,10 @@
 
 /* use-case specific output volumes */
 #define NORMAL_SPEAKER_VOLUME                 6
-#define VOICE_CALL_SPEAKER_VOLUME             6
+#define VOICE_CALL_SPEAKER_VOLUME             5
 
-#define HEADSET_VOLUME                        0
-#define HEADPHONE_VOLUME                      0 /* allow louder output for headphones */
+#define HEADSET_VOLUME                        -12
+#define HEADPHONE_VOLUME                      -12 /* allow louder output for headphones */
 
 /* product-specific defines */
 #define PRODUCT_DEVICE_PROPERTY "ro.product.device"
@@ -2673,17 +2673,17 @@ static int adev_set_voice_volume(struct audio_hw_device *dev, float volume)
     adev->voice_volume = volume;
 
     if (adev->devices.out_devices & AUDIO_DEVICE_OUT_EARPIECE) {
-		// front speaker 
+// front speaker 
         mixer_ctl_set_value(mixer_get_ctl_by_name(adev->mixer,
                     MIXER_DL1_VOICE_PLAYBACK_VOLUME), 0,
             (MIXER_ABE_GAIN_0DB-40) + (40*volume));
     } else if (adev->devices.out_devices & (AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE) ) {
-		// wired headsets
+// wired headsets
         mixer_ctl_set_value(mixer_get_ctl_by_name(adev->mixer,
                     MIXER_DL1_VOICE_PLAYBACK_VOLUME), 0,
             (MIXER_ABE_GAIN_0DB-35) + (40*volume));
     } else {
-		// back speaker
+// back speaker
         mixer_ctl_set_value(mixer_get_ctl_by_name(adev->mixer,
                     MIXER_DL2_VOICE_PLAYBACK_VOLUME), 0,
             (MIXER_ABE_GAIN_0DB-25) + (35*volume));
